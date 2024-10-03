@@ -39,6 +39,11 @@
       
       // 点几次调几次
       changeWeather() {
+       /*
+        changeWeather放在哪里？ --- Weather的原型对象上，供实例使用
+        由于changeWeather是作为onClick的回调，所以不是通过实例调用的，是直接调用
+        类中的方法默认开启了局部的严格模式，所以changeWeather中国男的this为undefined
+        */
         const isHot = this.state.isHot
         // 状态必须通过setState修改,且是更新是一种合并，不是数据替换
         this.setState({isHot: !isHot})
