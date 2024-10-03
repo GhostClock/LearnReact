@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3_回调形式的ref-回调次数的问题</title>
+</head>
+<body>
+  <!-- 准备好容器 -->
+  <div id="test"></div>
+
+  <!-- 引入react核心库 -->
+  <script type="text/javascript" src="../js/react.development.js"></script>
+  <!-- 引入react-dom 用于支持react操作dom -->
+  <script type="text/javascript" src="../js/react-dom.development.js"></script>
+  <!-- 引入babel用于将jsx转成js -->
+  <script type="text/javascript" src="../js/babel.min.js"></script>
+  <!-- 引入prop-types，用于对组件标签属性进行限制 -->
+  <script type="text/javascript" src="../js/prop-types.js"></script>
+  
+  <script type="text/babel">
+    // 创建组件
+    class Demo extends React.Component {
+
+      state = { isHot: true }
+      // 内联函数的ref会在更新的时候回调两次，第一次c返回null，第二次才是返回当前结点，
+      // 但是如写上的class的函数，就只会回调一次
+      // 在开发中，一般写成内联函数
+      render() {
+        const { isHot } = this.state
+        return (
+            <div>
+              <h2>今天天气很{isHot ? '炎热' : '凉爽'}</h2>
+              {/*<input ref={c => {this.input1 = c;console.log(c);}} placeholder='点击按钮提示数据' />*/}
+              <input ref={this.saveInput} placeholder='点击按钮提示数据' />
+              <button onClick={this.showData}>点击展示数据</button>
+              <button onClick={this.changWeather}>点击切换天气状态</button>
+            </div>
+        )
+      }
+
+      saveInput = (c) => {
+        this.input1 = c
+        console.log(c)
+      }
+
+      showData = () => {
+        const { input1 } = this
+        alert(input1.value);
+      }
+
+      changWeather = () => {
+        // 取出状态值
+        const { isHot } = this.state
+        // 更新状态
+        this.setState({isHot: !isHot})
+      }
+    }
+    // 渲染组件到页面
+    ReactDOM.render(<Demo/>, document.getElementById('test'))
+
+  </script>
+  </body>
+  </html>
