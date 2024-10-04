@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>4_getSnapshotBeforeUpdate的使用场景</title>
+  <style>
+    .list {
+      height: 150px;
+      width: 200px;
+      background-color: skyblue;
+      overflow: auto;
+    }
+    .news {
+      height: 30px;
+    }
+  </style>
+</head>
+<body>
+  <!-- 准备好容器 -->
+  <div id="test"></div>
+
+  <!-- 引入react核心库 -->
+  <script type="text/javascript" src="../js/17.0.1/react.development.js"></script>
+  <!-- 引入react-dom 用于支持react操作dom -->
+  <script type="text/javascript" src="../js/17.0.1/react-dom.development.js"></script>
+  <!-- 引入babel用于将jsx转成js -->
+  <script type="text/javascript" src="../js/17.0.1/babel.min.js"></script>
+  
+  <script type="text/babel">
+    class News extends React.Component {
+
+      state = {
+        newsList: []
+      }
+
+      componentDidMount() {
+        setInterval(() => {
+          // 获取原来状态
+          const { newsList } = this.state
+          // 添加一条新闻数据
+          const news = '新闻' + (newsList.length + 1)
+          // 更新状态
+          this.setState({newsList: [news, ...newsList]})
+        }, 1000);
+      }
+
+      getSnapshotBeforeUpdate() {
+        return this.refs.list.scrollHeight
+      }
+      componentDidUpdate(preProps, preState, height) {
+        const { list } = this.refs
+        list.scrollTop += list.scrollHeight - height
+      }
+
+      render() {
+        return (
+            <div className="list" ref='list'> 
+              {
+                this.state.newsList.map((news, index) => {
+                  return <div className="news" key={index}>{news}</div>
+                })
+              }
+            </div>
+        )
+      }
+    }
+    ReactDOM.render(<News />, document.getElementById('test'))
+  </script>
+
+</body>
+</html>
