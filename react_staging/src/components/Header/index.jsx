@@ -1,9 +1,14 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { nanoid } from 'nanoid'
 import './index.css'
 
 export default class Header extends Component {
-
+  // 对接受的props类型和必要性的限制
+  static propTypes = {
+    addTodo: PropTypes.func.isRequired
+  }
+  // 键盘事件的回调
   handleKeyUp = ({target, keyCode}) => {
     // 判断是否是回车按钮
     if (keyCode !== 13) { return }
