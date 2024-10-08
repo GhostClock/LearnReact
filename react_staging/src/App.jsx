@@ -15,13 +15,22 @@ export default class App extends Component {
       {id: '003', name: '撸代码', done: false},
     ]
   }
+  // 用于添加一个todo对象
+  addTodo = (todoObj) => {
+    // 获取原始todo
+    const { todos } = this.state
+    // 在前面追加一个todo
+    const newTodos = [todoObj, ...todos]
+    // 更新状态
+    this.setState({todos: newTodos})
+  }
 
   render() {
     const { todos } = this.state
     return (
         <div className="todo-container">
           <div className="todo-wrap">
-            <Header />
+            <Header addTodo={this.addTodo} />
             <List todos={todos} />
             <Footer />
           </div>
