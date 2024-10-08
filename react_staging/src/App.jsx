@@ -7,6 +7,8 @@ import './App.css'
 
 // 创建并暴露App组件
 export default class App extends Component {
+  // 状态在哪里，操作状态的方法就在哪里
+
   // 初始化数据
   state = {
     todos: [
@@ -25,13 +27,28 @@ export default class App extends Component {
     this.setState({todos: newTodos})
   }
 
+  // 更新一个todo的状态
+  updateTodo = (id, done) => {
+    // 获取原始todo
+    const { todos } = this.state
+    // 匹配处理数据
+    const newTodos = todos.map(todoObj => {
+      if (todoObj.id === id) {
+        return {...todoObj, done}
+      }
+      return todoObj
+    })
+    // 更新状态
+    this.setState({todos: newTodos})
+  }
+
   render() {
     const { todos } = this.state
     return (
         <div className="todo-container">
           <div className="todo-wrap">
             <Header addTodo={this.addTodo} />
-            <List todos={todos} />
+            <List todos={todos} updateTodo={this.updateTodo} />
             <Footer />
           </div>
         </div>
