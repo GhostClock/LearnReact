@@ -32,3 +32,10 @@ li:before {
 li:last-child {
   border-bottom: none;
 }
+
+.normal {
+  background-color: #fff;
+}
+.active {
+  background-color: #ddd;
+}
