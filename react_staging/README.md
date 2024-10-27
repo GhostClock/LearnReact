@@ -41,4 +41,17 @@
       ``` <Route path='/xxx' component={Dome}/> ```
   - 4、```<App>```的最外层包裹了一个```<BrowserRouter>```或者```<HashRouter>```
 
+### 四、路由组件与一般组件
+  - 1、写法不同：
+      - 一般组件: ```<Demo/>```
+      - 路由组件: ```<Route path='/home' component={Home}>```
+  - 2、存放位置不同:
+      - 一般组件: ```components```
+      - 路由组件: ```pages```
+  - 3、接受到的props不同(V5版本):
+      - 一般组件: 写组件标签时传递了什么，就能收到什么
+      - 路由组件: 接受到三个固定的属性 ```history location match```
+
+
+
 
